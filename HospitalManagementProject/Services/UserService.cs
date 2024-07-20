@@ -27,6 +27,46 @@ namespace HospitalManagementProject.GrpcServices
 			this.mapper = mapper;
 		}
 
+		public override async Task<RegisterResponse> AdminRegister(RegisterRequest request, ServerCallContext context)
+		{
+			User u = mapper.Map<RegisterRequest, User>(request);
+			var result = await userManager.CreateAsync(u, request.Password);
+			RegisterResponse response = mapper.Map<RegisterRequest, RegisterResponse>(request);
+
+			if (result.Succeeded)
+			{
+				await userManager.AddToRoleAsync(u, "ADMIN");
+				response.IsSuccess = true;
+				response.Message = "Create account succecssfully";
+			}
+			else
+			{
+				response.IsSuccess = false;
+				response.Message = "Create account failed";
+			}
+			return response;
+		}
+
+		public override async Task<DoctorRegisterResponse> DoctorRegister(DoctorRegisterRequest request, ServerCallContext context)
+		{
+			User u = mapper.Map<DoctorRegisterRequest, User>(request);
+			var result = await userManager.CreateAsync(u, request.Password);
+			DoctorRegisterResponse response = mapper.Map<DoctorRegisterRequest, DoctorRegisterResponse>(request);
+
+			if (result.Succeeded)
+			{
+				await userManager.AddToRoleAsync(u, "DOCTOR");
+				response.IsSuccess = true;
+				response.Message = "Create account succecssfully";
+			}
+			else
+			{
+				response.IsSuccess = false;
+				response.Message = "Create account failed";
+			}
+			return response;
+		}
+
 		public override async Task<LoginResponse> Login(LoginRequest request, ServerCallContext context)
 		{
 			LoginResponse response;
@@ -114,5 +154,7 @@ namespace HospitalManagementProject.GrpcServices
 				Message = "Hello " + request.Name
 			});
 		}
+
+
 	}
 }

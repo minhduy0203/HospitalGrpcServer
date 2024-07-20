@@ -6,6 +6,8 @@ import "Protos/greet.proto";
 service Userer {
 	rpc Login (LoginRequest) returns (LoginResponse);
 	rpc Register(RegisterRequest) returns (RegisterResponse);
+	rpc AdminRegister(RegisterRequest) returns (RegisterResponse);
+	rpc DoctorRegister(DoctorRegisterRequest) returns (DoctorRegisterResponse);
 	 rpc SayHello (HelloRequest) returns (HelloReply);
 }
 
@@ -36,5 +38,23 @@ message RegisterResponse {
 	string username = 3;
 	bool is_success = 4;
 	string message = 5;
+}
+
+message DoctorRegisterRequest{
+	string email = 1;
+	string password = 2;
+	string username = 3;
+	string qualification = 4;
+	string experience = 5;
+}
+
+message DoctorRegisterResponse {
+	string email = 1;
+	string password = 2;
+	string username = 3;
+	string qualification = 4;
+	string experience = 5;
+	bool is_success = 6;
+	string message = 7;
 }
 

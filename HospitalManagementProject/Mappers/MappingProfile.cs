@@ -9,6 +9,13 @@ namespace HospitalManagementProject.Mappers
 		{
 			CreateMap<RegisterRequest, User>();
 			CreateMap<RegisterRequest, RegisterResponse>();
+			CreateMap<DoctorRegisterRequest, DoctorRegisterResponse>();
+			CreateMap<DoctorRegisterRequest, User>()
+				.ForMember(dest => dest.MedStaff , opt => opt.MapFrom(src => new MedStaff
+				{
+					Qualification = src.Qualification,
+					Experience = src.Experience,
+				}));
 		}
 	}
 }
