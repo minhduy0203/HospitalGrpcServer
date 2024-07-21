@@ -26,6 +26,11 @@ message LoginResponse {
   bool is_success = 3;
 }
 
+message UserResponse {
+	string id = 1;
+	string username = 2;
+}
+
 message RegisterRequest{
 	string email = 1;
 	string password = 2;

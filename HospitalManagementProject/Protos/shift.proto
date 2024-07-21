@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+option csharp_namespace = "HospitalManagementProject";
+import "google/protobuf/timestamp.proto";
+
+service Shifter {
+
+}
+
+message ShiftResponse {
+	int32 id = 1;
+	string start = 2;
+	string end = 3;
+}

@@ -60,13 +60,13 @@ namespace HospitalManagementProject.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FeedbackId");
-
                     b.HasIndex("MedStaffId");
 
                     b.HasIndex("PatientId");
 
-                    b.HasIndex("PrescriptionId");
+                    b.HasIndex("PrescriptionId")
+                        .IsUnique()
+                        .HasFilter("[PrescriptionId] IS NOT NULL");
 
                     b.HasIndex("ShiftId");
 
@@ -118,6 +118,9 @@ namespace HospitalManagementProject.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("AppointmentId")
+                        .HasColumnType("int");
+
                     b.Property<int>("AppointmentPoint")
                         .HasColumnType("int");
 
@@ -149,8 +152,8 @@ namespace HospitalManagementProject.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -173,8 +176,8 @@ namespace HospitalManagementProject.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -194,6 +197,9 @@ namespace HospitalManagementProject.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("AppointmentId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Detail")
                         .IsRequired()
@@ -394,21 +400,21 @@ namespace HospitalManagementProject.Migrations
                         new
                         {
                             Id = "1",
-                            ConcurrencyStamp = "743a03be-1913-4102-b722-b193b48d99e5",
+                            ConcurrencyStamp = "63dc5b80-0221-428a-8941-e0d78200c272",
                             Name = "ADMIN",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "2",
-                            ConcurrencyStamp = "5613211f-ce46-47b9-8602-903616fdc303",
+                            ConcurrencyStamp = "1e9bdd79-3dca-4e42-95a9-7c4de453099c",
                             Name = "PATIENT",
                             NormalizedName = "PATIENT"
                         },
                         new
                         {
                             Id = "3",
-                            ConcurrencyStamp = "179212b5-01a5-4d77-98b0-31232199eafa",
+                            ConcurrencyStamp = "10da40b5-3628-4772-a071-f306c28bfdd5",
                             Name = "DOCTOR",
                             NormalizedName = "DOCTOR"
                         });
@@ -522,10 +528,6 @@ namespace HospitalManagementProject.Migrations
 
             modelBuilder.Entity("HospitalManagementProject.Models.Appointment", b =>
                 {
-                    b.HasOne("HospitalManagementProject.Models.Feedback", "Feedback")
-                        .WithMany()
-                        .HasForeignKey("FeedbackId");
-
                     b.HasOne("HospitalManagementProject.Models.MedStaff", "MedStaff")
                         .WithMany("Appointments")
                         .HasForeignKey("MedStaffId");
@@ -534,9 +536,13 @@ namespace HospitalManagementProject.Migrations
                         .WithMany("Appointments")
                         .HasForeignKey("PatientId");
 
+                    b.HasOne("HospitalManagementProject.Models.Feedback", "Feedback")
+                        .WithOne("Appointment")
+                        .HasForeignKey("HospitalManagementProject.Models.Appointment", "PrescriptionId");
+
                     b.HasOne("HospitalManagementProject.Models.Prescription", "Prescription")
-                        .WithMany()
-                        .HasForeignKey("PrescriptionId");
+                        .WithOne("Appointment")
+                        .HasForeignKey("HospitalManagementProject.Models.Appointment", "PrescriptionId");
 
                     b.HasOne("HospitalManagementProject.Models.Shift", "Shift")
                         .WithMany()
@@ -657,6 +663,12 @@ namespace HospitalManagementProject.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("HospitalManagementProject.Models.Feedback", b =>
+                {
+                    b.Navigation("Appointment")
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("HospitalManagementProject.Models.MedStaff", b =>
                 {
                     b.Navigation("Appointments");
@@ -671,6 +683,12 @@ namespace HospitalManagementProject.Migrations
                     b.Navigation("Appointments");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("HospitalManagementProject.Models.Prescription", b =>
+                {
+                    b.Navigation("Appointment")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("HospitalManagementProject.Models.Service", b =>

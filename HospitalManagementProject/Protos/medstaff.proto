@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+option csharp_namespace = "HospitalManagementProject";
+import "Protos/user.proto";
+
+service Meddstaffer {
+
+}
+
+
+message MedstaffResponse {
+	int32 id = 1;
+	string qualification = 2;
+	string experience = 3;
+	UserResponse user = 4;
+}
+
+

@@ -1,6 +1,7 @@
 using HospitalManagementProject.GrpcServices;
 using HospitalManagementProject.Mappers;
 using HospitalManagementProject.Models;
+using HospitalManagementProject.Repository;
 using HospitalManagementProject.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -46,6 +47,7 @@ namespace HospitalManagementProject
 				})
 				;
 			builder.Services.AddAuthorization();
+			builder.Services.AddTransient<IAppointmentRepository, AppointmentRepository>();
 
 			var app = builder.Build();
 
@@ -55,6 +57,7 @@ namespace HospitalManagementProject
 
 			app.MapGrpcService<GreeterService>();
 			app.MapGrpcService<UserService>();
+			app.MapGrpcService<AppointmentService>();
 
 			app.Run();
 		}
