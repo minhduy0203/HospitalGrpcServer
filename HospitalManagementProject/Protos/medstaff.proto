@@ -2,11 +2,17 @@ syntax = "proto3";
 
 option csharp_namespace = "HospitalManagementProject";
 import "Protos/user.proto";
-
+import "google/protobuf/empty.proto";
 service Meddstaffer {
-
+	rpc GetList(google.protobuf.Empty) returns (MedstaffListResponse);
 }
 
+message MedstaffListResponse {
+	repeated MedstaffResponse result = 1;
+	bool is_success = 2;
+	string message = 3;
+
+}
 
 message MedstaffResponse {
 	int32 id = 1;

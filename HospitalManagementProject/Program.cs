@@ -48,6 +48,12 @@ namespace HospitalManagementProject
 				;
 			builder.Services.AddAuthorization();
 			builder.Services.AddTransient<IAppointmentRepository, AppointmentRepository>();
+			builder.Services.AddTransient<IFeedbackRepository, FeedbackRepository>();
+			builder.Services.AddTransient<IPrescriptionRepository, PrescriptionRepository>();
+			builder.Services.AddTransient<IMedstaffRepository, MedstaffRepository>();
+			builder.Services.AddTransient<IShiftRespository, ShiftRepository>();
+
+
 
 			var app = builder.Build();
 
@@ -58,6 +64,12 @@ namespace HospitalManagementProject
 			app.MapGrpcService<GreeterService>();
 			app.MapGrpcService<UserService>();
 			app.MapGrpcService<AppointmentService>();
+			app.MapGrpcService<FeedbackService>();
+			app.MapGrpcService<PrescriptionService>();
+			app.MapGrpcService<MedstaffService>();
+			app.MapGrpcService<ShiftService>();
+
+
 
 			app.Run();
 		}

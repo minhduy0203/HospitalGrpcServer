@@ -5,6 +5,8 @@ import "google/protobuf/timestamp.proto";
 import "Protos/medstaff.proto";
 import "Protos/patient.proto";
 import "Protos/shift.proto";
+import "Protos/prescription.proto";
+
 
 
 service Appointmenter {
@@ -87,6 +89,8 @@ message AppointmentDetailResponse {
 	PatientResponse patient = 7;
 	bool is_success = 8;
 	string message = 9;
+	PrescriptionResponse prescription = 10;
+
 }
 
 

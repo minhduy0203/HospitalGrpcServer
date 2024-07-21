@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+option csharp_namespace = "HospitalManagementProject";
+import "Protos/user.proto";
+
+service Prescriptioner {
+	rpc AddPrescription(PrescriptionAddRequest) returns (PrescriptionAddResponse);
+}
+
+message PrescriptionResponse {
+	int32 id = 1;
+	string detail = 2;
+}
+message PrescriptionAddRequest {
+	int32 appointment_id = 1;
+	string detail = 2;
+}
+
+
+message PrescriptionAddResponse {
+	int32 appointment_id = 1;
+	string detail = 2;
+	bool is_success = 3;
+	string message = 4;
+}
+

@@ -40,26 +40,6 @@ namespace HospitalManagementProject.Models
 			modelBuilder.Entity<StaffShift>()
 				.HasKey(ss => new { ss.ShiftId, ss.MedStaffId });
 
-			modelBuilder.Entity<Prescription>()
-			.HasOne(a => a.Appointment)
-			.WithOne(a => a.Prescription)
-			.HasForeignKey<Appointment>(c => c.PrescriptionId);
-
-			modelBuilder.Entity<Feedback>()
-			.HasOne(a => a.Appointment)
-			.WithOne(a => a.Feedback)
-			.HasForeignKey<Appointment>(c => c.PrescriptionId);
-
-			modelBuilder.Entity<MedStaff>()
-			.HasOne(a => a.User)
-			.WithOne(a => a.MedStaff)
-			.HasForeignKey<User>(c => c.MedStaffId);
-
-			modelBuilder.Entity<Patient>()
-			.HasOne(a => a.User)
-			.WithOne(a => a.Patient)
-			.HasForeignKey<User>(c => c.PatientId);
-
 			Seeding(modelBuilder);
 		
 		}

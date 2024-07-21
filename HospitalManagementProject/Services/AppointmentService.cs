@@ -25,6 +25,7 @@ namespace HospitalManagementProject.Services
 				.Include(a => a.Shift)
 				.Include(a => a.MedStaff)
 				.ThenInclude(m => m.User)
+				.Include(m => m.Prescription)
 				.ToList();
 
 			AppointmentListResponse response = new AppointmentListResponse()

@@ -43,6 +43,7 @@ namespace HospitalManagementProject.Repository
 				.ThenInclude(m => m.User)
 				.Include(a => a.Patient)
 				.ThenInclude(p => p.User)
+				.Include(a => a.Prescription)
 				.FirstOrDefault(a => a.Id == id)
 
 				;
