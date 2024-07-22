@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option csharp_namespace = "HospitalClient";
+import "Protos/user.proto";
+
+service Patienter {
+
+}
+
+
+message PatientResponse {
+	int32 id = 1;
+	UserResponse user = 2;
+
+}
+
+

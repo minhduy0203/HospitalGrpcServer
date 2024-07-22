@@ -11,5 +11,7 @@ namespace HospitalManagementProject.Repository
 		public Appointment UpdateAppointment(Appointment appointment);
 
 		public Appointment UpdateAppointmentState(int id, Status status);
+
+		public Appointment UpdateAppointment(int id, string conclusion, string prescription);
 	}
 }

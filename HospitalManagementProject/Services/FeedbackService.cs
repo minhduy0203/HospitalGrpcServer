@@ -21,7 +21,7 @@ namespace HospitalManagementProject.Services
 		{
 
 			Feedback feedback = mapper.Map<FeedbackAddRequest, Feedback>(request);
-			Feedback result = feedbackRepository.AddFeedback(feedback);
+			Feedback result = feedbackRepository.AddFeedback(feedback, request.AppointmentId);
 			FeedbackResponse response = mapper.Map<Feedback, FeedbackResponse>(result);
 			response.Message = Constants.SUCCESSFULLY_MESSAGE;
 			response.IsSuccess = true;

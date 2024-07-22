@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+option csharp_namespace = "HospitalClient";
+import "Protos/user.proto";
+
+service Feedbacker {
+	rpc AddFeedback(FeedbackAddRequest) returns (FeedbackResponse);
+}
+
+
+message FeedbackAddRequest {
+	int32 appointment_id = 1;
+	string comment = 2;
+	int32 docter_point = 3;
+	int32 appointment_point =  4;
+}
+
+message FeedbackResponse {
+	int32 appointment_id = 1;
+	string comment = 2;
+	int32 docter_point = 3;
+	int32 appointment_point =  4;
+	string message = 5;
+	bool is_success = 6;
+}
+
+

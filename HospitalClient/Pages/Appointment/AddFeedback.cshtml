@@ -1,0 +1,41 @@
+﻿@page "{id}"
+@model HospitalClient.Pages.Appointment.AddFeedbackModel
+@{
+}
+
+<div class="container px-5 py-24 mx-auto">
+	<div class="lg:w-4/5 mx-auto flex flex-wrap">
+		<div class=" w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
+			<h2 class="max-w-sm mx-auto text-sm title-font text-gray-500 tracking-widest ">Appointment Detail - id: @Model.response.Id</h2>
+
+			<form method="post" asp-route-id="@Model.response.Id" class="max-w-sm mx-auto">
+				<div class="mb-5">
+					<label for="large-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">AppointmentPoint</label>
+					<input name="AppointmentPoint" value="@Model.response?.Feedback?.AppointmentPoint" type="number" id="large-input" class="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+				</div>
+
+				<div class="mb-5">
+					<label for="large-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">DoctorPoint</label>
+					<input name="DocterPoint" value="@Model.response?.Feedback?.DocterPoint" type="number" id="large-input" class="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+
+				</div>
+
+				<div class="mb-5">
+					<label for="large-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Comment</label>
+					<input name="Comment" value="@Model.response?.Feedback?.Comment" type="text" id="large-input" class="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+				</div>
+
+
+
+				<button type="submit" class="flex ml-1 text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded">Update</button>
+
+			</form>
+
+			<p class="max-w-sm mx-auto text-sm font-light text-red-500 dark:text-gray-400">
+				@Model.Message
+			</p>
+
+
+		</div>
+	</div>
+</div>

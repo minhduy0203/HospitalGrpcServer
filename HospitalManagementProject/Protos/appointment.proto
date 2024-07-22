@@ -6,6 +6,8 @@ import "Protos/medstaff.proto";
 import "Protos/patient.proto";
 import "Protos/shift.proto";
 import "Protos/prescription.proto";
+import "Protos/feedback.proto";
+
 
 
 
@@ -17,12 +19,28 @@ service Appointmenter {
 	rpc GetListOfMedstaff(AppointmentListScheduleRequest) returns (AppointmentListResponse);
 	rpc GetListOfPatient(AppointmentListSchedulePatientRequest)  returns (AppointmentListResponse);
 	rpc UpdateAppointmentStatus(AppointmentUpdateStatusRequest) returns (AppointmentUpdateStatusResponse);
+	rpc UpdateAppointment(UpdateAppointmentRequest) returns (UpdateAppointmentResponse);
+
 
 }
 message AppointmentListRequest {
 	google.protobuf.Timestamp start = 1;
 	google.protobuf.Timestamp end = 2;
 
+}
+
+message UpdateAppointmentRequest {
+	int32 appointment_id = 1;
+	string prescription = 2;
+	string conclusion = 3;
+}
+
+message UpdateAppointmentResponse {
+	int32 appointment_id = 1;
+	string prescription = 2;
+	string conclusion = 3;
+	bool is_success = 4;
+	string message = 5;
 }
 
 message AppointmentUpdateStatusRequest {
@@ -74,8 +92,9 @@ message AppointmentResponse {
 	google.protobuf.Timestamp date = 2;
 	ShiftResponse shift = 3;
 	MedstaffResponse medstaff = 4;
-	int32 status = 5;
-	string conclusion = 6;
+	PatientResponse patient = 5;
+	int32 status = 6;
+	string conclusion = 7;
 
 }
 
@@ -90,6 +109,7 @@ message AppointmentDetailResponse {
 	bool is_success = 8;
 	string message = 9;
 	PrescriptionResponse prescription = 10;
+	FeedbackResponse feedback = 11;
 
 }
 

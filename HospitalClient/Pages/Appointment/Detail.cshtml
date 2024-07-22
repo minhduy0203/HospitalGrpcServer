@@ -1,0 +1,57 @@
+﻿@page "{id}"
+@model HospitalClient.Pages.Appointment.DetailModel
+@{
+}
+
+<section class="text-gray-700 body-font overflow-hidden bg-white">
+
+	<div class="container px-5 py-24 mx-auto">
+		<div class="lg:w-4/5 mx-auto flex flex-wrap">
+			<div class=" w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
+
+				<h2 class="text-sm title-font text-gray-500 tracking-widest">Appointment Detail - id: @Model.response.Id</h2>
+				<h1 class="text-gray-900 text-3xl title-font font-medium mb-1">Patient: @Model.response?.Patient?.User?.Username - Doctor: @Model.response?.Medstaff?.User?.Username</h1>
+				<h1 class="text-gray-900 text-3xl title-font font-medium mb-1">Date: @Model.response?.Date.ToDateTime().ToString("dd/MM/yyyy")</h1>
+				<h1 class="text-gray-900 text-3xl title-font font-medium mb-1">Shift: @Model.response?.Shift.Start - @Model.response?.Shift.End</h1>
+
+				<p class="leading-relaxed">Prescription: @(Model.response?.Prescription != null ? Model.response?.Prescription.Detail : "No prescription")</p>
+				<p class="leading-relaxed">Conclusion: @(Model.response?.Conclusion != null ? Model.response?.Conclusion : "No conclusion")</p>
+
+				<div class="flex mt-6 items-center pb-5 border-b-2 border-gray-200 mb-5">
+
+					<div class="flex ml-6 items-center">
+						<div class="relative">
+
+							<span class="absolute right-0 top-0 h-full w-10 text-center text-gray-600 pointer-events-none flex items-center justify-center">
+								<svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4" viewBox="0 0 24 24">
+									<path d="M6 9l6 6 6-6"></path>
+								</svg>
+							</span>
+						</div>
+					</div>
+				</div>
+				<div class="flex">
+					@if (User.IsInRole("DOCTOR"))
+					{
+
+						<a asp-page="/Appointment/Update" asp-route-id="@Model.response.Id" class="flex ml-1 text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded">Update</a>
+					}
+
+
+					@if (User.IsInRole("PATIENT"))
+					{
+
+						<a asp-page="/Appointment/AddFeedback" asp-route-id="@Model.response.Id" class="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
+							<svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-5 h-5" viewBox="0 0 24 24">
+								<path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path>
+							</svg>
+						</a>
+					}
+
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+

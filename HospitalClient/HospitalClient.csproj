@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Protos\appointment.proto" />
+    <None Remove="Protos\feedback.proto" />
+    <None Remove="Protos\greet.proto" />
+    <None Remove="Protos\medstaff.proto" />
+    <None Remove="Protos\patient.proto" />
+    <None Remove="Protos\prescription.proto" />
+    <None Remove="Protos\shift.proto" />
+    <None Remove="Protos\user.proto" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Grpc.AspNetCore" Version="2.40.0" />
+    <PackageReference Include="Grpc.Tools" Version="2.40.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.6.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Protobuf Include="Protos\appointment.proto" GrpcServices="Client" />
+    <Protobuf Include="Protos\feedback.proto" GrpcServices="Client" />
+    <Protobuf Include="Protos\greet.proto" GrpcServices="Client" />
+    <Protobuf Include="Protos\medstaff.proto" GrpcServices="Client" />
+    <Protobuf Include="Protos\patient.proto" GrpcServices="Client" />
+    <Protobuf Include="Protos\prescription.proto" GrpcServices="Client" />
+    <Protobuf Include="Protos\shift.proto" GrpcServices="Client" />
+    <Protobuf Include="Protos\user.proto" GrpcServices="Client" />
+  </ItemGroup>
+
+</Project>

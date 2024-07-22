@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+option csharp_namespace = "HospitalClient";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+service Shifter {
+	rpc GetList(google.protobuf.Empty) returns (ShiftListResponse);
+}
+message ShiftListResponse {
+	repeated ShiftResponse result = 1;
+	bool is_success = 2;
+	string message = 3;
+}
+message ShiftResponse {
+	int32 id = 1;
+	string start = 2;
+	string end = 3;
+}

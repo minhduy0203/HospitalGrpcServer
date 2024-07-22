@@ -4,7 +4,7 @@ namespace HospitalManagementProject.Repository
 {
 	public interface IFeedbackRepository
 	{
-		public Feedback AddFeedback(Feedback feedback);
+		public Feedback AddFeedback(Feedback feedback, int appointmentId);
 		
     }
 }

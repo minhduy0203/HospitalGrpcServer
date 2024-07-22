@@ -1,0 +1,98 @@
+﻿@page
+@model HospitalClient.Pages.Admin.AppointmentListModel
+@using HospitalClient.Utils
+@{
+}
+
+
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+	<table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+		<thead class="text-xs text-gray-700 uppercase dark:text-gray-400">
+			<tr>
+				<th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
+					Id
+				</th>
+				<th scope="col" class="px-6 py-3">
+					Date
+				</th>
+
+				<th scope="col" class="px-6 py-3">
+					Shift
+				</th>
+				<th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
+					Doctor
+				</th>
+				<th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
+					Patient
+				</th>
+				<th scope="col" class="px-6 py-3">
+					Status
+				</th>
+
+				<th scope="col" class="px-6 py-3">
+					Action
+				</th>
+
+			</tr>
+		</thead>
+
+		<tbody>
+
+			@foreach (AppointmentResponse response in Model.List)
+			{
+				<tr class="border-b border-gray-200 dark:border-gray-700">
+					<th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+						@response.Id
+					</th>
+					<td class="px-6 py-4">
+						@response.Date.ToDateTime().ToString("dd/MM/yyyy")
+					</td>
+					<td class="px-6 py-4">
+						@response.Shift.Start - @response.Shift.End
+					</td>
+					<td class="px-6 py-4 bg-gray-50 dark:bg-gray-800">
+						@response.Medstaff?.User?.Username
+					</td>
+					<td class="px-6 py-4 bg-gray-50 dark:bg-gray-800">
+						@response.Patient?.User?.Username
+					</td>
+					<td class="px-6 py-4">
+						@if ((int)response.Status == 1)
+						{
+							<div class="h-2.5 w-2.5 rounded-full bg-green-500 me-2"></div>
+						}
+						else if ((int)response.Status == 2)
+						{
+							<div class="h-2.5 w-2.5 rounded-full bg-red-500 me-2"></div>
+						}
+						else
+						{
+							<div class="h-2.5 w-2.5 rounded-full bg-blue-500 me-2"></div>
+						}
+						@(((Status)response.Status).ToString())
+
+					</td>
+
+					<td>
+
+
+
+						<form method="post">
+
+							<a asp-page="/Appointment/Detail" asp-route-id="@response.Id" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Detail</a>
+
+							<button asp-page-handler="Approve" type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Approve</button>
+							<button asp-page-handler="Reject" type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Reject</button>
+							<input type="hidden" name="id" value="@response.Id" />
+						</form>
+
+
+
+					</td>
+				</tr>
+			}
+
+
+		</tbody>
+	</table>
+</div>

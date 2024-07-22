@@ -44,6 +44,7 @@ namespace HospitalManagementProject.Repository
 				.Include(a => a.Patient)
 				.ThenInclude(p => p.User)
 				.Include(a => a.Prescription)
+				.Include(a => a.Feedback)
 				.FirstOrDefault(a => a.Id == id)
 
 				;
@@ -52,6 +53,33 @@ namespace HospitalManagementProject.Repository
 		public Appointment UpdateAppointment(Appointment appointment)
 		{
 			context.Entry<Appointment>(appointment).State = EntityState.Modified;
+			context.SaveChanges();
+			return appointment;
+		}
+
+		public Appointment UpdateAppointment(int id, string conclusion, string prescription)
+		{
+			Appointment appointment = context.Appointments
+				.Include(a => a.Prescription)
+				.FirstOrDefault(a => a.Id == id);
+			if (appointment.Prescription != null)
+			{
+				appointment.Prescription.Detail = prescription;
+			}
+			else
+			{
+				Prescription p = new Prescription()
+				{
+					Detail = prescription
+				};
+				context.Prescriptions.Add(p);
+				context.SaveChanges();
+
+				appointment.PrescriptionId = p.Id;
+				context.SaveChanges();
+			}
+
+			appointment.Conclusion = conclusion;
 			context.SaveChanges();
 			return appointment;
 		}
@@ -66,5 +94,7 @@ namespace HospitalManagementProject.Repository
 			}
 			return appointment;
 		}
+
+
 	}
 }

@@ -77,7 +77,7 @@ namespace HospitalManagementProject.GrpcServices
 				{
 					Message = "Login failed",
 					Token = "",
-					IsSuccess  = false,
+					IsSuccess = false,
 				};
 			}
 			else
@@ -99,8 +99,17 @@ namespace HospitalManagementProject.GrpcServices
 					List<Claim> claims = new List<Claim>()
 				{
 					new Claim(ClaimTypes.Name , user.UserName),
-					new Claim(ClaimTypes.Role, role)
+					new Claim(ClaimTypes.Role, role),
 				};
+					Claim idClaim;
+					if (role.Equals("PATIENT"))
+					{
+						idClaim = new Claim("Id", user.PatientId.ToString());
+					} else
+					{
+						idClaim = new Claim("Id", user.MedStaffId.ToString());
+					}
+					claims.Add(idClaim);
 
 					var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]));
 					var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);

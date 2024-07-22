@@ -1,0 +1,115 @@
+syntax = "proto3";
+
+option csharp_namespace = "HospitalClient";
+import "google/protobuf/timestamp.proto";
+import "Protos/medstaff.proto";
+import "Protos/patient.proto";
+import "Protos/shift.proto";
+import "Protos/prescription.proto";
+import "Protos/feedback.proto";
+
+
+
+service Appointmenter {
+	rpc GetList (AppointmentListRequest) returns (AppointmentListResponse);
+	rpc Get(AppointmentRequest) returns (AppointmentDetailResponse);
+	rpc Delete(AppointmentRequest) returns (AppointmentDetailResponse);
+	rpc Add(AppointmentAddRequest) returns (AppointmentDetailResponse);
+	rpc GetListOfMedstaff(AppointmentListScheduleRequest) returns (AppointmentListResponse);
+	rpc GetListOfPatient(AppointmentListSchedulePatientRequest)  returns (AppointmentListResponse);
+	rpc UpdateAppointmentStatus(AppointmentUpdateStatusRequest) returns (AppointmentUpdateStatusResponse);
+	rpc UpdateAppointment(UpdateAppointmentRequest) returns (UpdateAppointmentResponse);
+
+}
+
+message UpdateAppointmentRequest {
+	int32 appointment_id = 1;
+	string prescription = 2;
+	string conclusion = 3;
+}
+
+message UpdateAppointmentResponse {
+	int32 appointment_id = 1;
+	string prescription = 2;
+	string conclusion = 3;
+	bool is_success = 4;
+	string message = 5;
+}
+
+message AppointmentListRequest {
+	google.protobuf.Timestamp start = 1;
+	google.protobuf.Timestamp end = 2;
+
+}
+
+message AppointmentUpdateStatusRequest {
+	int32 appointment_id = 1;
+	int32 status = 2;
+}
+
+message AppointmentUpdateStatusResponse {
+	int32 appointment_id = 1;
+	int32 status = 2;
+	bool is_success = 3;
+	string message = 4;
+}
+
+message AppointmentListSchedulePatientRequest {
+	int32 week = 1;
+	int32 year = 2;
+	int32 patient_id = 3;
+}
+
+
+message AppointmentListScheduleRequest {
+	int32 week = 1;
+	int32 year = 2;
+	int32 medstaff_id = 3;
+}
+
+message AppointmentAddRequest {
+	string room = 1;
+	int32 medstaff_id = 2;
+	int32 patient_id = 3;
+	google.protobuf.Timestamp date = 4;
+	int32 shift_id = 5;
+	string conclusion = 6;
+
+}
+
+message AppointmentListResponse {
+	repeated AppointmentResponse result = 1;
+	bool is_success = 2;
+	string message = 3;
+}
+message AppointmentRequest {
+	int32 id =1;
+}
+
+message AppointmentResponse {
+	int32 id = 1;
+	google.protobuf.Timestamp date = 2;
+	ShiftResponse shift = 3;
+	MedstaffResponse medstaff = 4;
+	PatientResponse patient = 5;
+	int32 status = 6;
+	string conclusion = 7;
+
+}
+
+message AppointmentDetailResponse {
+	int32 id = 1;
+	google.protobuf.Timestamp date = 2;
+	ShiftResponse shift = 3;
+	MedstaffResponse medstaff = 4;
+	int32 status = 5;
+	string conclusion = 6;
+	PatientResponse patient = 7;
+	bool is_success = 8;
+	string message = 9;
+	PrescriptionResponse prescription = 10;
+	FeedbackResponse feedback = 11;
+
+}
+
+

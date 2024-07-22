@@ -1,0 +1,108 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>@ViewData["Title"] - AttendanceClient</title>
+	@* <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/AttendanceClient.styles.css" asp-append-version="true" /> *@
+	<link rel="stylesheet" type="text/css" href=~/lib/tailwindcss/base.css />
+	<link rel="stylesheet" type="text/css" href=~/lib/tailwindcss/componentscss />
+	<link rel="stylesheet" type="text/css" href=~/lib/tailwindcss/tailwind.css />
+	<link rel="stylesheet" type="text/css" href=~/lib/tailwindcss/utilities.css />
+
+
+</head>
+<body>
+	<header>
+		<nav class="bg-white dark:bg-gray-900 w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
+			<div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+
+				<div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+					@if (User.Identity.IsAuthenticated)
+					{
+						<div class="mx-2 text-black  none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+							Hello @User.Identity.Name
+						</div>
+
+						<form method="post">
+							<button asp-page="/User/Login" asp-page-handler="Logout" type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Logout</button>
+						</form>
+
+
+
+					}
+					else
+					{
+						<div >
+							<a asp-page="/User/Login" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Login</a>
+						</div>
+						<div class="ml-1.5">
+							<a asp-page="/User/Register" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mx-1.5">Register</a>
+						</div>
+
+					}
+
+				</div>
+				<div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
+					<ul class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+						@if (User.Identity.IsAuthenticated)
+						{
+
+							@if (User.IsInRole("ADMIN"))
+							{
+								<li>
+									<a asp-page="/Admin/AppointmentList" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700" aria-current="page">List Appointment</a>
+								</li>
+
+								<li>
+									<a asp-page="/Admin/CreateDoctor" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700" aria-current="page">Create medstaff</a>
+
+								</li>
+							}
+
+							@if (User.IsInRole("DOCTOR"))
+							{
+								<li>
+									<a asp-page="/Medstaff/Schedule" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700" aria-current="page">Schedule</a>
+								</li>
+							}
+
+							@if (User.IsInRole("PATIENT"))
+							{
+								<li>
+									<a asp-page="/Appointment/Add" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700" aria-current="page">Create an appointment</a>
+								</li>
+								<li>
+									<a asp-page="/Patient/Schedule" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700" aria-current="page">Schedule</a>
+								</li>
+							}
+							
+
+						}
+
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</header>
+	<div class="">
+		<main role="main" class="pb-3">
+			@RenderBody()
+		</main>
+	</div>
+
+	<footer class="border-top footer text-muted">
+		<div class="container">
+			
+		</div>
+	</footer>
+
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="~/js/site.js" asp-append-version="true"></script>
+
+	@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

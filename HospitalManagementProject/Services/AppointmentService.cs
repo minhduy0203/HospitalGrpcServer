@@ -25,6 +25,8 @@ namespace HospitalManagementProject.Services
 				.Include(a => a.Shift)
 				.Include(a => a.MedStaff)
 				.ThenInclude(m => m.User)
+				.Include(a => a.Patient)
+				.ThenInclude(p => p.User)
 				.Include(m => m.Prescription)
 				.ToList();
 
@@ -82,6 +84,8 @@ namespace HospitalManagementProject.Services
 				.Include(a => a.Shift)
 				.Include(a => a.MedStaff)
 				.ThenInclude(m => m.User)
+				.Include(a => a.Patient)
+				.ThenInclude(m => m.User)
 				.Where(a => a.Date >= start && a.Date <= end)
 				.Where(a => a.MedStaffId == request.MedstaffId)
 				.ToList();
@@ -108,6 +112,8 @@ namespace HospitalManagementProject.Services
 				.GetAll()
 				.Include(a => a.Shift)
 				.Include(a => a.MedStaff)
+				.ThenInclude(m => m.User)
+				.Include (a => a.Patient)
 				.ThenInclude(m => m.User)
 				.Where(a => a.Date >= start && a.Date <= end)
 				.Where(a => a.PatientId == request.PatientId)
@@ -138,6 +144,19 @@ namespace HospitalManagementProject.Services
 
 			return Task.FromResult(response);
 
+		}
+
+		public override Task<UpdateAppointmentResponse> UpdateAppointment(UpdateAppointmentRequest request, ServerCallContext context)
+		{
+			appointmentRepository.UpdateAppointment(request.AppointmentId, request.Conclusion, request.Prescription);
+			return Task.FromResult(new UpdateAppointmentResponse
+			{
+				AppointmentId = request.AppointmentId,
+				Conclusion = request.Conclusion,
+				Prescription = request.Prescription,
+				IsSuccess = true,
+				Message = "Successfully"
+			});
 		}
 	}
 }
